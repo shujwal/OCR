@@ -68,6 +68,8 @@ def extract_citizen_front_nepali(raw_text):
 
     return fields
 
+
+
 def extract_citizen_front_english(raw_text):
 
     fields = {

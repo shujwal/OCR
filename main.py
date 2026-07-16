@@ -14,7 +14,7 @@ elif "Citizenship Certificate" in raw_text or "Full Name" in raw_text:
     fields = extract_citizen_front_english(raw_text)
 
 else:
-    print("Document type not recognized.")
+    print("Document type not recognized...")
 
 print("\nRAW TEXT\n")
 print(raw_text)

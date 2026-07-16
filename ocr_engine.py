@@ -46,35 +46,35 @@ ocr = PaddleOCR(
 
 
     #  3rd one
-def preprocess(image_path):
-    image = cv2.imread(image_path)
+# def preprocess(image_path):
+#     image = cv2.imread(image_path)
 
-    # Upscale
-    image = cv2.resize(image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+#     # Upscale
+#     image = cv2.resize(image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
 
-    # Convert to grayscale
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+#     # Convert to grayscale
+#     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    # Reduce noise
-    gray = cv2.GaussianBlur(gray, (3, 3), 0)
+#     # Reduce noise
+#     gray = cv2.GaussianBlur(gray, (3, 3), 0)
 
-    # Improve contrast
-    gray = cv2.equalizeHist(gray)
+#     # Improve contrast
+#     gray = cv2.equalizeHist(gray)
 
-    # Adaptive threshold
-    gray = cv2.adaptiveThreshold(
-        gray,
-        255,
-        cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-        cv2.THRESH_BINARY,
-        11,
-        2
-    )
+#     # Adaptive threshold
+#     gray = cv2.adaptiveThreshold(
+#         gray,
+#         255,
+#         cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+#         cv2.THRESH_BINARY,
+#         11,
+#         2
+#     )
 
-    # Convert back to 3 channels
-    processed = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
+#     # Convert back to 3 channels
+#     processed = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
 
-    return processed
+#     return processed
 
 
 
