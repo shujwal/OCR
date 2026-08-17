@@ -1,4 +1,8 @@
-paddleocr==3.7.0
-paddlepaddle==3.2.2
+# paddleocr==3.7.0
+# paddlepaddle==3.2.2
+# opencv-python
+# numpy
+paddleocr==2.10.0
+paddlepaddle==2.6.2
 opencv-python
 numpy

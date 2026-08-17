@@ -1,20 +1,73 @@
-def get_value(lines, current_index):
-    """
-    Get the value from the same line after ':'.
-    If empty, return the next non-empty line.
-    """
+# def get_value(lines, current_index):
+#     """
+#     Get the value from the same line after ':'.
+#     If empty, return the next non-empty line.
+#     """
 
-    line = lines[current_index].strip()
+#     line = lines[current_index].strip()
 
-    if ":" in line:
-        value = line.split(":", 1)[1].strip()
+#     if ":" in line:
+#         value = line.split(":", 1)[1].strip()
+#         if value:
+#             return value
+
+#     for i in range(current_index + 1, len(lines)):
+#         value = lines[i].strip()
+#         if value:
+#             return value
+
+#     return ""
+
+def get_value(lines, i):
+    # Same line
+    if ":" in lines[i]:
+        value = lines[i].split(":", 1)[1].strip()
         if value:
             return value
 
-    for i in range(current_index + 1, len(lines)):
-        value = lines[i].strip()
-        if value:
-            return value
+    labels = [
+        "Citizenship Certificate No.",
+        "Full Name",
+        "Sex",
+        "Date of Birth",
+        "Year",
+        "Month",
+        "Day",
+        "Place of Birth",
+        "Permanent Address",
+        "District",
+        "Municipality",
+        "VDC",
+        "Ward",
+        "Father",
+        "Mother",
+        "Spouse",
+        "ना.प्र.नं.",
+        "नाम",
+        "जन्मस्थान",
+        "जन्ममिति",
+        "स्थायी बसोबास",
+        "गा./न.पा.",
+        "गा.पा.",
+        "न.पा.",
+        "बाबुको",
+        "आमाको",
+        "पति",
+        "पत्नी"
+    ]
+
+    # Check next few lines
+    for j in range(i + 1, min(i + 4, len(lines))):
+        text = lines[j].strip()
+
+        if not text:
+            continue
+
+        # Skip field labels
+        if any(text.startswith(label) for label in labels):
+            continue
+
+        return text
 
     return ""
 
@@ -67,7 +120,6 @@ def extract_citizen_front_nepali(raw_text):
             fields["spouse_name"] = get_value(lines, i)
 
     return fields
-
 
 
 def extract_citizen_front_english(raw_text):
@@ -126,14 +178,20 @@ def extract_citizen_front_english(raw_text):
             fields["date_of_birth"] = f"{year}-{month}-{day}"
 
         # Place of Birth
-        elif "District:" in line:
-            fields["birth_district"] = get_value(lines, i)
+        elif "Place of Birth" in line:
 
-        elif "Municipality:" in line or "VDC:" in line:
-            fields["birth_municipality"] = get_value(lines, i)
+            for j in range(i + 1, min(i + 6, len(lines))):
 
-        elif "Ward No." in line:
-            fields["birth_ward"] = get_value(lines, i)
+                current = lines[j].strip()
+
+                if current.startswith("District"):
+                    fields["birth_district"] = current.split(":", 1)[1].strip()
+
+                elif current.startswith("Municipality") or current.startswith("VDC"):
+                    fields["birth_municipality"] = current.split(":", 1)[1].strip()
+
+                elif current.startswith("Ward"):
+                    fields["birth_ward"] = current.split(":", 1)[1].strip()
 
         # Father
         elif line.startswith("Father"):

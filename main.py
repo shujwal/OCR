@@ -21,3 +21,34 @@ print(raw_text)
 
 print("\nATTRIBUTES\n")
 print(fields)
+
+
+# # Can use local ai model for Ocr text correction and attribute field detection
+# # this approach makes the fields extraction easy but may be difficult to setup initially
+# import ollama
+# response = ollama.chat(
+#     model="hermes3",
+#     messages=[
+#         {
+#             "role": "user",
+#             "content": f"""
+#             You are an OCR correction assistant for Nepali government documents.
+
+#               Rules:
+#             - Correct OCR mistakes only.
+#             - Do not translate.
+#             - Do not summarize.
+#             - Do not remove any information.
+#             - Preserve line order.
+#             - Preserve both English and Nepali words.
+#             - Preserve numbers exactly.
+#             - Return only the corrected text.
+
+#             OCR Text:
+
+#             {raw_text} """
+#         }
+#     ]
+# )
+
+# corrected_text = response["message"]["content"]
